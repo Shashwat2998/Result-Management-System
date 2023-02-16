@@ -4,7 +4,7 @@ How to run:
 3. nodemon app.js
 
 
-password in teacher login :"password"
+password in teacher login :"pswd"
 
 mongo db cluster in app.js
 port :3000
