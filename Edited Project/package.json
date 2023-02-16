@@ -1,7 +1,7 @@
 {
   "name": "projectnodejs",
   "version": "1.0.0",
-  "description": "How to run:  1. npm install 2. npm install -g nodemon 3. nodemon app.js",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,13 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.8",
-    "express": "^4.18.2",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
     "express-ejs-layouts": "^2.5.1",
-    "mongoose": "^6.1.1",
-    "mysql": "^2.18.1"
+    "mongoose": "^6.1.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.15"
   }
 }
