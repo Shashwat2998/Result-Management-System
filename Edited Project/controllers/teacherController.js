@@ -1,6 +1,6 @@
 //importing student model
-//const Student = require('../models/student');
-const database = require('../database')
+const Student = require('../models/student');
+
 const teacher_login_get = (req, res) => {
     res.render("teacher/teacherLogin");
 };
@@ -8,7 +8,7 @@ const teacher_login_get = (req, res) => {
 const teacher_login_post = (req, res) => {
 
     //******** Teacher Login Password **********//
-    if(req.body.password == "password"){
+    if(req.body.password == "pswd"){
         res.redirect("/teacher/option");
     }
     else{
@@ -19,30 +19,13 @@ const teacher_login_post = (req, res) => {
 };
 
 const teacher_viewall_get = async (req, res) => {
-    const mysql = "select * from student_details"
-    database.query(mysql,function(err,allStudents){
-        if(err){
-            throw err
-        }
-        else{
-            res.render("teacher/viewall", {student : allStudents})
-        }
-    })
-    
+    const allStudents = await Student.find() 
+    res.render("teacher/viewall", {student : allStudents})
 };
 
 const teacher_edit_get =async (req, res) => {
-    //const user = await Student.findById(req.params.id)
-    const mysql = "select * from student_details where rollno = "+req.params.id;
-    database.query(mysql,function(err,user){
-        if(err){
-            throw err
-        }
-        else{
-            res.render("teacher/edit", {user : user})
-        }
-    })
-    
+    const user = await Student.findById(req.params.id)
+    res.render("teacher/edit", {user : user})
 };
 const teacher_edit_post =async (req, res) => {
     const user = await Student.findByIdAndUpdate(req.params.id,req.body)
@@ -59,22 +42,18 @@ const teacher_add_get = (req, res) => {
     res.render("teacher/addstudent");
 };
 const teacher_add_post = async (req, res) => {
-    
-        //const mysql ="insert into student_details values('"+req.body.rollno+"', '"+req.body.name+"', '"+"', '"+req.body.dob+"','"+req.body.score+"')";        
-        var query = "insert into student_details values ('"+req.body.roll+"', '"+req.body.name+"', '"+req.body.dob+"', '"+req.body.score+"')"
-    
-    
-        database.query(query,function(err){
-            if(err){
-                throw err
-            }
-            else{
-                console.log("Data added successfully")
-                res.redirect("/teacher/viewall");
-            }
-        })
-        
-      
+    const singleStudent = new Student({
+        name : req.body.name,  
+        roll : req.body.roll,             
+        dob : req.body.dob,
+        score : req.body.score        
+    })
+    try {
+        const newStudent = await singleStudent.save();
+        res.redirect("/teacher/add");
+      } catch {
+        res.send("error")
+    }
 };
 
 //exporting teacher controller functions
