@@ -3,7 +3,16 @@ const express = require("express");
 const app = express();
 
 const port = 3000;
+const mongoose = require('mongoose'); //to connect to mongodb
 
+//connect to mongodb and listen to requests
+mongoose.connect("mongodb+srv://meranam:Agarwal@cluster0.1yz5y.mongodb.net/?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = mongoose.connection;
+db.on("error", (error) => console.log(error));
+db.once("open", () => console.log("connected"));
 
 //register view engine
 app.set('view engine', 'ejs');
